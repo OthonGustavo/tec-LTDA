@@ -24,4 +24,15 @@ export default await Env.create(new URL('../', import.meta.url), {
   |----------------------------------------------------------
   */
   SESSION_DRIVER: Env.schema.enum(['cookie', 'memory'] as const),
+
+  /*
+  |----------------------------------------------------------
+  | Caminho do arquivo SQLite
+  |----------------------------------------------------------
+  |
+  | Opcional. Em ambientes serverless (Vercel) o disco e somente
+  | leitura, entao o banco precisa apontar para /tmp.
+  |
+  */
+  DATABASE_PATH: Env.schema.string.optional(),
 })

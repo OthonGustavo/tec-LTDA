@@ -168,3 +168,41 @@ versionado** — cada ambiente gera o seu com as migrations e o seed.
 
 Para começar do zero, basta apagar o arquivo e rodar `node ace migration:run` e
 `node ace db:seed` novamente.
+
+## Publicação na Vercel
+
+O projeto está preparado para rodar na Vercel como função serverless:
+
+- `api/index.ts` — inicializa o AdonisJS uma vez por instância e reaproveita o
+  `server.handle()` entre as requisições, no lugar de escutar uma porta.
+- `vercel.json` — roda `npm run build`, embarca a pasta `build/` na função e
+  redireciona todas as rotas para ela.
+
+### Limitação conhecida: o banco não é persistente
+
+Na Vercel o sistema de arquivos é somente leitura, exceto `/tmp`, que é
+efêmero e exclusivo de cada instância. Na primeira requisição a função copia
+`database/demo.sqlite3` para `/tmp/db.sqlite3` e passa a usá-lo.
+
+Consequência: **o que for cadastrado no ambiente publicado desaparece quando a
+instância é reciclada**, e duas instâncias simultâneas não enxergam os dados
+uma da outra. As páginas de leitura (dashboard, listas, funil, termos de uso e
+política de privacidade) funcionam normalmente — a publicação serve como
+demonstração, não para uso em produção.
+
+Para tornar os dados duráveis, troque o SQLite por um Postgres gerenciado:
+
+1. Provisione um banco (Neon, Supabase ou Vercel Postgres).
+2. Instale o driver: `npm i pg`.
+3. Em `config/database.ts`, troque a conexão `sqlite` por `pg`, lendo a URL de
+   `env.get('DATABASE_URL')`.
+4. Cadastre `DATABASE_URL` em Vercel → Settings → Environment Variables.
+5. Rode `node ace migration:run` apontando para o banco remoto.
+
+### Variáveis de ambiente
+
+`api/index.ts` define valores padrão para o app conseguir subir sem
+configuração manual. Em um ambiente de verdade, cadastre ao menos a `APP_KEY`
+em Vercel → Settings → Environment Variables (gere uma com
+`node ace generate:key`). Sem ela, a chave é derivada do id do deploy e as
+sessões caem a cada nova publicação.
