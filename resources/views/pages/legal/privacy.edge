@@ -1,0 +1,401 @@
+@component('components/layout', { title: 'Política de Privacidade' })
+  <article class="mx-auto max-w-3xl">
+    <h1 class="text-3xl font-bold tracking-tight text-slate-900">Política de Privacidade</h1>
+    <p class="mt-2 text-sm text-slate-500">Última atualização: 15 de setembro de 2026</p>
+
+    <div class="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+      <p class="font-semibold">Atenção: este é um documento modelo.</p>
+      <p class="mt-1 leading-relaxed">
+        O texto abaixo é um <strong>modelo genérico</strong>, oferecido apenas como ponto de partida.
+        Ele <strong>precisa ser revisado e adaptado por um advogado</strong> antes de entrar em
+        produção ou de ser apresentado a qualquer usuário real. Nada aqui constitui parecer ou
+        orientação jurídica.
+      </p>
+      <p class="mt-2 leading-relaxed">
+        Todos os campos entre colchetes — como [RAZÃO SOCIAL], [CNPJ], [ENDEREÇO],
+        [E-MAIL DE CONTATO], [NOME DO ENCARREGADO/DPO] e [CIDADE/UF] — devem ser preenchidos com os
+        dados reais da empresa.
+      </p>
+    </div>
+
+    <nav class="mt-8 rounded-lg border border-slate-200 bg-white p-5">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Nesta página</h2>
+      <ol class="mt-3 grid gap-x-6 gap-y-2 text-sm text-blue-600 sm:grid-cols-2">
+        <li><a href="#secao-1" class="hover:text-blue-700 hover:underline">1. Quem somos e a quem se aplica</a></li>
+        <li><a href="#secao-2" class="hover:text-blue-700 hover:underline">2. Quais dados coletamos</a></li>
+        <li><a href="#secao-3" class="hover:text-blue-700 hover:underline">3. Para que usamos os dados</a></li>
+        <li><a href="#secao-4" class="hover:text-blue-700 hover:underline">4. Bases legais da LGPD</a></li>
+        <li><a href="#secao-5" class="hover:text-blue-700 hover:underline">5. Cookies</a></li>
+        <li><a href="#secao-6" class="hover:text-blue-700 hover:underline">6. Compartilhamento com terceiros</a></li>
+        <li><a href="#secao-7" class="hover:text-blue-700 hover:underline">7. Armazenamento e segurança</a></li>
+        <li><a href="#secao-8" class="hover:text-blue-700 hover:underline">8. Prazo de retenção</a></li>
+        <li><a href="#secao-9" class="hover:text-blue-700 hover:underline">9. Direitos do titular</a></li>
+        <li><a href="#secao-10" class="hover:text-blue-700 hover:underline">10. Encarregado de dados (DPO)</a></li>
+        <li><a href="#secao-11" class="hover:text-blue-700 hover:underline">11. Transferência internacional</a></li>
+        <li><a href="#secao-12" class="hover:text-blue-700 hover:underline">12. Alterações desta política</a></li>
+        <li><a href="#secao-13" class="hover:text-blue-700 hover:underline">13. Contato</a></li>
+      </ol>
+    </nav>
+
+    <div class="mt-8 space-y-8">
+      <section id="secao-1">
+        <h2 class="text-lg font-semibold text-slate-900">1. Quem somos e a quem se aplica</h2>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Esta política explica como o CRM tec-LTDA trata dados pessoais, em linha com a Lei nº
+          13.709/2018 (Lei Geral de Proteção de Dados — LGPD).
+        </p>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          O controlador dos dados de conta é [RAZÃO SOCIAL], inscrita no CNPJ sob o nº [CNPJ], com
+          sede em [ENDEREÇO].
+        </p>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          A política se aplica a duas situações diferentes, e é importante distingui-las:
+        </p>
+        <ul class="mt-2 list-disc pl-5 text-sm leading-relaxed text-slate-700">
+          <li>
+            <strong>Dados dos usuários do sistema</strong> (quem cria uma conta e faz login): aqui
+            [RAZÃO SOCIAL] é a controladora.
+          </li>
+          <li>
+            <strong>Dados que o usuário cadastra sobre os próprios clientes</strong>: nesse caso o
+            usuário (ou a empresa dele) é o controlador, e [RAZÃO SOCIAL] apenas opera o sistema que
+            armazena essas informações.
+          </li>
+        </ul>
+      </section>
+
+      <section id="secao-2">
+        <h2 class="text-lg font-semibold text-slate-900">2. Quais dados coletamos</h2>
+
+        <h3 class="mt-4 text-sm font-semibold text-slate-900">Dados de conta</h3>
+        <ul class="mt-2 list-disc pl-5 text-sm leading-relaxed text-slate-700">
+          <li>nome completo;</li>
+          <li>endereço de e-mail (usado como identificador de login);</li>
+          <li>
+            senha, armazenada apenas como <em>hash</em> — o sistema nunca guarda nem consegue
+            recuperar a senha original;
+          </li>
+          <li>datas de criação e de atualização do cadastro.</li>
+        </ul>
+
+        <h3 class="mt-4 text-sm font-semibold text-slate-900">
+          Dados inseridos pelo usuário sobre seus próprios clientes
+        </h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          São informações que o próprio usuário digita no CRM a respeito de terceiros:
+        </p>
+        <ul class="mt-2 list-disc pl-5 text-sm leading-relaxed text-slate-700">
+          <li>nome, e-mail, telefone e empresa do cliente cadastrado;</li>
+          <li>status do cliente no funil (lead, em negociação, cliente atendido);</li>
+          <li>anotações e histórico de interações registrados pela equipe;</li>
+          <li>
+            oportunidades de negócio: título, valor estimado e etapa (contato inicial, proposta
+            enviada, ganho, perdido).
+          </li>
+        </ul>
+
+        <h3 class="mt-4 text-sm font-semibold text-slate-900">Dados técnicos</h3>
+        <ul class="mt-2 list-disc pl-5 text-sm leading-relaxed text-slate-700">
+          <li>
+            cookie de sessão, necessário para manter o usuário autenticado enquanto navega (ver a
+            seção 5);
+          </li>
+          <li>
+            registros de acesso gerados pelo servidor durante o funcionamento normal da aplicação.
+          </li>
+        </ul>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          O sistema não coleta dados sensíveis, não faz perfilamento e não usa ferramentas de
+          analytics ou publicidade.
+        </p>
+      </section>
+
+      <section id="secao-3">
+        <h2 class="text-lg font-semibold text-slate-900">3. Para que usamos os dados</h2>
+        <ul class="mt-2 list-disc pl-5 text-sm leading-relaxed text-slate-700">
+          <li>
+            <strong>Autenticação:</strong> identificar o usuário no login e manter a sessão ativa;
+          </li>
+          <li>
+            <strong>Operação do CRM:</strong> armazenar e exibir clientes, oportunidades e anotações,
+            e calcular os indicadores do painel;
+          </li>
+          <li>
+            <strong>Segurança:</strong> prevenir acessos não autorizados, detectar uso indevido e
+            proteger a integridade das informações;
+          </li>
+          <li>
+            <strong>Suporte:</strong> responder às solicitações enviadas pelos canais de contato;
+          </li>
+          <li>
+            <strong>Cumprimento de obrigação legal ou regulatória:</strong> atender determinações de
+            autoridades competentes.
+          </li>
+        </ul>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Os dados não são usados para publicidade, venda a terceiros ou qualquer finalidade alheia
+          às listadas acima.
+        </p>
+      </section>
+
+      <section id="secao-4">
+        <h2 class="text-lg font-semibold text-slate-900">4. Bases legais da LGPD</h2>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Cada tratamento se apoia em uma das bases legais do art. 7º da LGPD:
+        </p>
+        <ul class="mt-2 list-disc pl-5 text-sm leading-relaxed text-slate-700">
+          <li>
+            <strong>Execução de contrato</strong> (art. 7º, V): criação da conta, autenticação e
+            funcionamento do CRM contratado;
+          </li>
+          <li>
+            <strong>Legítimo interesse</strong> (art. 7º, IX): segurança da aplicação, prevenção a
+            fraudes e melhoria do serviço, sempre respeitados os direitos e liberdades do titular;
+          </li>
+          <li>
+            <strong>Cumprimento de obrigação legal ou regulatória</strong> (art. 7º, II): guarda de
+            registros e atendimento a determinações legais;
+          </li>
+          <li>
+            <strong>Consentimento</strong> (art. 7º, I): quando aplicável, para tratamentos
+            específicos que dependam de autorização expressa — que pode ser revogada a qualquer
+            momento.
+          </li>
+        </ul>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Para os dados que o usuário cadastra sobre seus próprios clientes, a definição da base legal
+          é responsabilidade dele, na condição de controlador.
+        </p>
+      </section>
+
+      <section id="secao-5">
+        <h2 class="text-lg font-semibold text-slate-900">5. Cookies</h2>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          O sistema usa <strong>apenas um cookie</strong>: o cookie de sessão do AdonisJS, chamado
+          <code class="rounded bg-slate-100 px-1 py-0.5 font-mono text-xs text-slate-800">adonis-session</code>.
+        </p>
+        <ul class="mt-2 list-disc pl-5 text-sm leading-relaxed text-slate-700">
+          <li>
+            <strong>Finalidade:</strong> é um cookie estritamente essencial — sem ele não é possível
+            manter o login entre uma página e outra;
+          </li>
+          <li>
+            <strong>Conteúdo:</strong> guarda apenas o identificador da sessão, não dados pessoais;
+          </li>
+          <li>
+            <strong>Características:</strong> marcado como <code class="rounded bg-slate-100 px-1 py-0.5 font-mono text-xs text-slate-800">httpOnly</code>
+            (inacessível a scripts da página) e com <code class="rounded bg-slate-100 px-1 py-0.5 font-mono text-xs text-slate-800">SameSite=Lax</code>;
+          </li>
+          <li>
+            <strong>Duração:</strong> a sessão expira após período de inatividade e é encerrada ao
+            sair da conta.
+          </li>
+        </ul>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Não utilizamos cookies de publicidade, de rastreamento de terceiros, pixels de redes sociais
+          ou ferramentas de medição de audiência. Como o único cookie é essencial ao funcionamento, o
+          sistema não exibe banner de consentimento de cookies.
+        </p>
+      </section>
+
+      <section id="secao-6">
+        <h2 class="text-lg font-semibold text-slate-900">6. Compartilhamento com terceiros</h2>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Os dados não são vendidos, alugados ou cedidos para fins comerciais. O compartilhamento
+          ocorre apenas nas seguintes hipóteses:
+        </p>
+        <ul class="mt-2 list-disc pl-5 text-sm leading-relaxed text-slate-700">
+          <li>
+            com prestadores de serviço estritamente necessários à operação (por exemplo, hospedagem
+            da aplicação), limitados ao necessário e obrigados contratualmente à confidencialidade;
+          </li>
+          <li>
+            para cumprir obrigação legal, regulatória ou ordem de autoridade competente;
+          </li>
+          <li>
+            para defesa de direitos em processo judicial, administrativo ou arbitral;
+          </li>
+          <li>
+            mediante solicitação ou autorização expressa do próprio titular.
+          </li>
+        </ul>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          A relação de operadores em uso pode ser solicitada por [E-MAIL DE CONTATO].
+        </p>
+      </section>
+
+      <section id="secao-7">
+        <h2 class="text-lg font-semibold text-slate-900">7. Armazenamento e segurança</h2>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Descrevemos abaixo, com precisão, as medidas que este sistema efetivamente aplica:
+        </p>
+        <ul class="mt-2 list-disc pl-5 text-sm leading-relaxed text-slate-700">
+          <li>
+            <strong>Senhas com hash scrypt:</strong> as senhas são gravadas apenas como hash gerado
+            pelo algoritmo scrypt, função projetada para resistir a ataques de força bruta. A senha em
+            texto puro não é armazenada nem pode ser recuperada — em caso de esquecimento, ela é
+            redefinida, nunca reenviada.
+          </li>
+          <li>
+            <strong>Proteção contra CSRF:</strong> todos os formulários que alteram dados carregam um
+            token verificado pelo middleware Shield do AdonisJS, o que bloqueia requisições forjadas a
+            partir de outros sites.
+          </li>
+          <li>
+            <strong>Acesso restrito a usuários autenticados:</strong> exceto as páginas de login,
+            cadastro e estas páginas jurídicas, todas as telas e operações exigem sessão válida.
+          </li>
+          <li>
+            <strong>Sessão protegida:</strong> o cookie de sessão é httpOnly, com SameSite=Lax, e é
+            enviado exclusivamente por HTTPS quando a aplicação roda em ambiente de produção.
+          </li>
+          <li>
+            <strong>Cabeçalhos de segurança:</strong> o Shield também aplica proteções de resposta
+            como bloqueio de enquadramento em iframes e HSTS.
+          </li>
+          <li>
+            <strong>Banco de dados:</strong> os dados ficam em um banco SQLite local, no servidor em
+            que a aplicação está instalada.
+          </li>
+        </ul>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Para deixar claro o que o sistema <strong>não</strong> faz: não há criptografia do banco de
+          dados em repouso, nem rotina de backup automático, nem autenticação em dois fatores. A
+          proteção física e lógica do servidor, bem como a política de cópias de segurança, são
+          responsabilidade de quem hospeda a aplicação.
+        </p>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Nenhum sistema é totalmente imune a incidentes. Havendo incidente de segurança com risco
+          relevante aos titulares, adotaremos as providências cabíveis e faremos a comunicação prevista
+          no art. 48 da LGPD.
+        </p>
+      </section>
+
+      <section id="secao-8">
+        <h2 class="text-lg font-semibold text-slate-900">8. Prazo de retenção</h2>
+        <ul class="mt-2 list-disc pl-5 text-sm leading-relaxed text-slate-700">
+          <li>
+            <strong>Dados de conta:</strong> mantidos enquanto a conta estiver ativa e por
+            [PRAZO DE RETENÇÃO] após o encerramento, para atendimento de obrigações legais e defesa de
+            direitos;
+          </li>
+          <li>
+            <strong>Dados de clientes, oportunidades e anotações:</strong> mantidos enquanto o usuário
+            (controlador) desejar, podendo ser excluídos por ele a qualquer momento dentro do próprio
+            sistema;
+          </li>
+          <li>
+            <strong>Cookie de sessão:</strong> eliminado ao encerrar a sessão ou após o período de
+            inatividade;
+          </li>
+          <li>
+            <strong>Registros de acesso:</strong> guardados pelo prazo previsto na legislação
+            aplicável.
+          </li>
+        </ul>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Encerrados os prazos e as finalidades, os dados são eliminados ou anonimizados.
+        </p>
+      </section>
+
+      <section id="secao-9">
+        <h2 class="text-lg font-semibold text-slate-900">9. Direitos do titular</h2>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          O art. 18 da LGPD garante ao titular, a qualquer momento e mediante requisição:
+        </p>
+        <ul class="mt-2 list-disc pl-5 text-sm leading-relaxed text-slate-700">
+          <li>confirmação da existência de tratamento;</li>
+          <li>acesso aos dados;</li>
+          <li>correção de dados incompletos, inexatos ou desatualizados;</li>
+          <li>
+            anonimização, bloqueio ou eliminação de dados desnecessários, excessivos ou tratados em
+            desconformidade com a lei;
+          </li>
+          <li>portabilidade a outro fornecedor, observados os segredos comercial e industrial;</li>
+          <li>
+            eliminação dos dados tratados com base no consentimento, ressalvadas as hipóteses de
+            guarda previstas em lei;
+          </li>
+          <li>
+            informação sobre as entidades públicas e privadas com as quais houve compartilhamento;
+          </li>
+          <li>
+            informação sobre a possibilidade de não fornecer consentimento e sobre as consequências
+            disso;
+          </li>
+          <li>revogação do consentimento.</li>
+        </ul>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          <strong>Como exercer:</strong> envie a solicitação para [E-MAIL DE CONTATO], identificando-se
+          e descrevendo o pedido. Responderemos no menor prazo possível, observados os prazos legais.
+          Podemos solicitar informações adicionais para confirmar sua identidade antes de atender —
+          medida de segurança para evitar divulgação indevida a terceiros.
+        </p>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Se você é cliente de um usuário do CRM e seus dados foram cadastrados por ele, o pedido deve
+          ser dirigido a esse usuário, que é o controlador dessas informações. Podemos encaminhar a
+          solicitação a ele e prestar o apoio técnico necessário.
+        </p>
+      </section>
+
+      <section id="secao-10">
+        <h2 class="text-lg font-semibold text-slate-900">10. Encarregado pelo tratamento de dados (DPO)</h2>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Nos termos do art. 41 da LGPD, o encarregado é o canal de comunicação entre a empresa, os
+          titulares e a Autoridade Nacional de Proteção de Dados (ANPD):
+        </p>
+        <ul class="mt-2 list-disc pl-5 text-sm leading-relaxed text-slate-700">
+          <li>Encarregado: [NOME DO ENCARREGADO/DPO]</li>
+          <li>E-mail: [E-MAIL DE CONTATO]</li>
+          <li>Endereço: [ENDEREÇO]</li>
+        </ul>
+      </section>
+
+      <section id="secao-11">
+        <h2 class="text-lg font-semibold text-slate-900">11. Transferência internacional</h2>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Os dados são armazenados no servidor em que a aplicação está instalada. Caso a hospedagem
+          contratada fique fora do Brasil, ou algum operador processe dados no exterior, a
+          transferência internacional observará os requisitos dos arts. 33 a 36 da LGPD, com garantias
+          contratuais adequadas de proteção.
+        </p>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          A localização atual da infraestrutura pode ser consultada em [E-MAIL DE CONTATO].
+        </p>
+      </section>
+
+      <section id="secao-12">
+        <h2 class="text-lg font-semibold text-slate-900">12. Alterações desta política</h2>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Esta política pode ser revisada a qualquer momento para acompanhar mudanças no sistema, nas
+          práticas de tratamento ou na legislação. A data de "Última atualização" no topo da página
+          indica a versão vigente.
+        </p>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          Mudanças relevantes serão comunicadas por e-mail ou por aviso dentro do sistema antes de
+          entrarem em vigor.
+        </p>
+      </section>
+
+      <section id="secao-13">
+        <h2 class="text-lg font-semibold text-slate-900">13. Contato</h2>
+        <ul class="mt-2 list-disc pl-5 text-sm leading-relaxed text-slate-700">
+          <li>Controlador: [RAZÃO SOCIAL] — CNPJ [CNPJ]</li>
+          <li>Endereço: [ENDEREÇO] — [CIDADE/UF]</li>
+          <li>E-mail: [E-MAIL DE CONTATO]</li>
+          <li>Encarregado (DPO): [NOME DO ENCARREGADO/DPO]</li>
+        </ul>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700">
+          As regras de uso do sistema estão nos
+          <a href="{{ route('legal.terms') }}" class="font-medium text-blue-600 hover:text-blue-700 hover:underline">Termos de Uso</a>.
+        </p>
+      </section>
+    </div>
+
+    <div class="mt-10 border-t border-slate-200 pt-6">
+      <a href="{{ route('dashboard') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline">
+        ← Voltar
+      </a>
+    </div>
+  </article>
+@end

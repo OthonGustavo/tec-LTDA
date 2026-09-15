@@ -1,0 +1,74 @@
+@component('components/layout', { title: 'Editar oportunidade', active: 'opportunities' })
+  <div class="mb-4">
+    <a
+      href="{{ route('customers.show', { id: opportunity.customerId }) }}"
+      class="text-sm font-medium text-slate-500 hover:text-slate-700"
+    >← {{ opportunity.customer.name }}</a>
+  </div>
+
+  <div class="max-w-2xl rounded-lg border border-slate-200 bg-white p-6">
+    <h1 class="text-xl font-bold tracking-tight text-slate-900">Editar oportunidade</h1>
+    <p class="mt-1 text-sm text-slate-500">Cliente: {{ opportunity.customer.name }}</p>
+
+    <form method="POST" action="{{ route('opportunities.update', { id: opportunity.id }) }}" class="mt-6 space-y-5">
+      {{ csrfField() }}
+
+      <div>
+        <label for="title" class="block text-sm font-medium text-slate-700">Título</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value="{{ old('title', opportunity.title) }}"
+          class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        />
+        @inputError('title')
+          <p class="mt-1 text-sm text-rose-600">{{ $messages[0] }}</p>
+        @end
+      </div>
+
+      <div>
+        <label for="estimatedValue" class="block text-sm font-medium text-slate-700">Valor estimado</label>
+        <input
+          type="number"
+          step="0.01"
+          min="0"
+          id="estimatedValue"
+          name="estimatedValue"
+          value="{{ old('estimatedValue', opportunity.estimatedValue) }}"
+          class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        />
+        @inputError('estimatedValue')
+          <p class="mt-1 text-sm text-rose-600">{{ $messages[0] }}</p>
+        @end
+      </div>
+
+      <div>
+        <label for="stage" class="block text-sm font-medium text-slate-700">Etapa</label>
+        <select
+          id="stage"
+          name="stage"
+          class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        >
+          @each(option in stageOptions)
+            <option value="{{ option.value }}" {{ old('stage', opportunity.stage) === option.value ? 'selected' : '' }}>{{ option.label }}</option>
+          @end
+        </select>
+        @inputError('stage')
+          <p class="mt-1 text-sm text-rose-600">{{ $messages[0] }}</p>
+        @end
+      </div>
+
+      <div class="flex items-center gap-3 pt-2">
+        <button
+          type="submit"
+          class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+        >Salvar</button>
+        <a
+          href="{{ route('customers.show', { id: opportunity.customerId }) }}"
+          class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+        >Cancelar</a>
+      </div>
+    </form>
+  </div>
+@end

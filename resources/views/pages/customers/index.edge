@@ -1,0 +1,161 @@
+@component('components/layout', { title: 'Clientes', active: 'customers' })
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-bold tracking-tight text-slate-900">Clientes</h1>
+      <p class="mt-1 text-sm text-slate-600">
+        {{ customers.total }} cliente(s) na carteira.
+      </p>
+    </div>
+
+    <a
+      href="{{ route('customers.create') }}"
+      class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
+    >Novo cliente</a>
+  </div>
+
+  <form
+    method="GET"
+    action="{{ route('customers.index') }}"
+    class="mt-6 rounded-lg border border-slate-200 bg-white p-4"
+  >
+    <div class="flex flex-wrap items-end gap-3">
+      <div class="min-w-[16rem] flex-1">
+        <label for="busca" class="block text-sm font-medium text-slate-700">Buscar</label>
+        <input
+          id="busca"
+          type="text"
+          name="busca"
+          value="{{ busca }}"
+          placeholder="Nome, e-mail ou empresa"
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        />
+      </div>
+
+      <div class="min-w-[12rem]">
+        <label for="status" class="block text-sm font-medium text-slate-700">Status</label>
+        <select
+          id="status"
+          name="status"
+          class="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        >
+          <option value="">Todos os status</option>
+          @each(option in statusOptions)
+            <option value="{{ option.value }}" {{ status === option.value ? 'selected' : '' }}>
+              {{ option.label }}
+            </option>
+          @end
+        </select>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button
+          type="submit"
+          class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+        >Filtrar</button>
+
+        @if(busca || status)
+          <a
+            href="{{ route('customers.index') }}"
+            class="text-sm font-medium text-slate-500 hover:text-slate-700"
+          >Limpar</a>
+        @end
+      </div>
+    </div>
+  </form>
+
+  @if(customers.all().length === 0)
+    <div class="mt-6 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
+      <h2 class="text-base font-semibold text-slate-900">Nenhum cliente por aqui</h2>
+      <p class="mx-auto mt-1 max-w-md text-sm text-slate-600">
+        @if(busca || status)
+          Nenhum registro corresponde aos filtros aplicados. Tente outra busca ou limpe os filtros.
+        @else
+          Cadastre o primeiro cliente para começar a acompanhar oportunidades e interações.
+        @end
+      </p>
+      <a
+        href="{{ route('customers.create') }}"
+        class="mt-6 inline-block rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
+      >Novo cliente</a>
+    </div>
+  @else
+    <div class="mt-6 overflow-hidden rounded-lg border border-slate-200 bg-white">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-slate-200 text-sm">
+          <thead class="bg-slate-50">
+            <tr class="text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <th scope="col" class="px-4 py-3">Nome / E-mail</th>
+              <th scope="col" class="px-4 py-3">Empresa</th>
+              <th scope="col" class="px-4 py-3">Telefone</th>
+              <th scope="col" class="px-4 py-3">Status</th>
+              <th scope="col" class="px-4 py-3 text-center">Oportunidades</th>
+              <th scope="col" class="px-4 py-3">Cadastro</th>
+              <th scope="col" class="px-4 py-3 text-right">Ações</th>
+            </tr>
+          </thead>
+
+          <tbody class="divide-y divide-slate-100">
+            @each(c in customers.all())
+              <tr class="hover:bg-slate-50">
+                <td class="px-4 py-3">
+                  <a
+                    href="{{ route('customers.show', { id: c.id }) }}"
+                    class="font-semibold text-slate-900 hover:text-blue-700"
+                  >{{ c.name }}</a>
+                  <div class="text-xs text-slate-500">{{ c.email || '—' }}</div>
+                </td>
+                <td class="px-4 py-3 text-slate-700">{{ c.company || '—' }}</td>
+                <td class="px-4 py-3 text-slate-700">{{ c.phone || '—' }}</td>
+                <td class="px-4 py-3">
+                  <span
+                    class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset {{ statusClasses[c.status] }}"
+                  >{{ statusLabels[c.status] || c.status }}</span>
+                </td>
+                <td class="px-4 py-3 text-center font-semibold text-slate-700">
+                  {{ c.$extras.opportunities_count }}
+                </td>
+                <td class="px-4 py-3 text-slate-500">
+                  {{ c.createdAt.setLocale('pt-BR').toFormat('dd/MM/yyyy') }}
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-end gap-3">
+                    <a
+                      href="{{ route('customers.show', { id: c.id }) }}"
+                      class="text-sm font-medium text-blue-600 hover:text-blue-800"
+                    >Ver</a>
+                    <a
+                      href="{{ route('customers.edit', { id: c.id }) }}"
+                      class="text-sm font-medium text-slate-600 hover:text-slate-900"
+                    >Editar</a>
+                    <form
+                      method="POST"
+                      action="{{ route('customers.destroy', { id: c.id }) }}"
+                      onsubmit="return confirm('Excluir este cliente? As oportunidades e notas dele também serão removidas.')"
+                    >
+                      {{ csrfField() }}
+                      <button
+                        type="submit"
+                        class="text-sm font-medium text-rose-600 hover:text-rose-800"
+                      >Excluir</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            @end
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    @if(customers.lastPage > 1)
+      <nav class="mt-6 flex flex-wrap items-center justify-center gap-1" aria-label="Paginação">
+        @each(anchor in customers.getUrlsForRange(1, customers.lastPage))
+          <a
+            href="{{ anchor.url }}"
+            class="rounded-lg border px-3 py-2 text-sm font-medium {{ anchor.isActive ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50' }}"
+          >{{ anchor.page }}</a>
+        @end
+      </nav>
+    @end
+  @end
+@end

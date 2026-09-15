@@ -1,0 +1,70 @@
+@component('components/layout', { title: 'Entrar', bare: true })
+  <div class="grid min-h-screen place-items-center px-4 py-12">
+    <div class="w-full max-w-md">
+      <div class="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+        <div class="flex flex-col items-center text-center">
+          <span class="grid h-12 w-12 place-items-center rounded-xl bg-blue-600 text-lg font-bold text-white">tL</span>
+          <h1 class="mt-4 text-2xl font-bold tracking-tight text-slate-900">Entrar no CRM</h1>
+          <p class="mt-1 text-sm text-slate-500">
+            Acesse sua conta para acompanhar clientes e oportunidades.
+          </p>
+        </div>
+
+        <form method="POST" action="{{ route('auth.login') }}" class="mt-8 space-y-5">
+          {{ csrfField() }}
+
+          <div>
+            <label for="email" class="mb-1 block text-sm font-medium text-slate-700">E-mail</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              value="{{ old('email', '') }}"
+              autocomplete="email"
+              placeholder="voce@empresa.com"
+              class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+            @inputError('email')
+              <p class="mt-1 text-sm text-rose-600">{{ $messages[0] }}</p>
+            @end
+          </div>
+
+          <div>
+            <label for="password" class="mb-1 block text-sm font-medium text-slate-700">Senha</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              autocomplete="current-password"
+              placeholder="••••••••"
+              class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+            @inputError('password')
+              <p class="mt-1 text-sm text-rose-600">{{ $messages[0] }}</p>
+            @end
+          </div>
+
+          <button
+            type="submit"
+            class="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >Entrar</button>
+        </form>
+
+        <div class="mt-6 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600">
+          <p class="font-semibold text-slate-700">Acesso de demonstração</p>
+          <p class="mt-1">
+            E-mail <span class="font-mono text-slate-900">admin@tecltda.com</span> ·
+            senha <span class="font-mono text-slate-900">admin123</span>
+          </p>
+        </div>
+      </div>
+
+      <p class="mt-6 text-center text-sm text-slate-600">
+        Ainda não tem conta?
+        <a href="{{ route('auth.register.show') }}" class="font-semibold text-blue-600 hover:text-blue-700">
+          Criar conta
+        </a>
+      </p>
+    </div>
+  </div>
+@end

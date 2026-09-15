@@ -1,0 +1,177 @@
+@component('components/layout', { title: 'Dashboard', active: 'dashboard' })
+  {{-- RF08: visão geral com total de clientes, valor no funil e taxa de conversão. --}}
+  <div class="flex flex-wrap items-start justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-bold tracking-tight text-slate-900">Dashboard</h1>
+      <p class="mt-1 text-sm text-slate-600">Visão geral da sua operação comercial.</p>
+    </div>
+    <a
+      href="{{ route('customers.create') }}"
+      class="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
+    >Novo cliente</a>
+  </div>
+
+  <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="rounded-xl border border-slate-200 border-l-4 border-l-blue-500 bg-white p-5 shadow-sm">
+      <p class="text-sm font-medium text-slate-500">Clientes cadastrados</p>
+      <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900">{{ totalCustomers }}</p>
+      <p class="mt-1 text-xs text-slate-500">Base total do CRM</p>
+    </div>
+
+    <div class="rounded-xl border border-slate-200 border-l-4 border-l-amber-500 bg-white p-5 shadow-sm">
+      <p class="text-sm font-medium text-slate-500">Valor no funil</p>
+      <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900">
+        {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(pipelineValue)) }}
+      </p>
+      <p class="mt-1 text-xs text-slate-500">{{ openCount }} oportunidade(s) em aberto</p>
+    </div>
+
+    <div class="rounded-xl border border-slate-200 border-l-4 border-l-emerald-500 bg-white p-5 shadow-sm">
+      <p class="text-sm font-medium text-slate-500">Taxa de conversão</p>
+      <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900">{{ conversionRate }}%</p>
+      <p class="mt-1 text-xs text-slate-500">{{ wonCount }} ganhas · {{ lostCount }} perdidas</p>
+    </div>
+
+    <div class="rounded-xl border border-slate-200 border-l-4 border-l-indigo-500 bg-white p-5 shadow-sm">
+      <p class="text-sm font-medium text-slate-500">Receita ganha</p>
+      <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900">
+        {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(wonValue)) }}
+      </p>
+      <p class="mt-1 text-xs text-slate-500">
+        Perdido: {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(lostValue)) }}
+      </p>
+    </div>
+  </div>
+
+  <div class="mt-6 grid gap-4 lg:grid-cols-3">
+    <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm lg:col-span-2">
+      <h2 class="text-sm font-semibold text-slate-900">Distribuição do funil</h2>
+      <div class="mt-4 space-y-4">
+        @each(item in stageBreakdown)
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset {{ item.classes }}">
+                {{ item.label }}
+              </span>
+              <span class="text-xs text-slate-500">
+                {{ item.count }} oportunidade(s) ·
+                <span class="font-semibold text-slate-900">
+                  {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(item.total)) }}
+                </span>
+              </span>
+            </div>
+            <div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-slate-100">
+              <div
+                class="h-2 rounded-full bg-blue-500"
+                style="width: {{ maxStageTotal > 0 ? Math.round(item.total / maxStageTotal * 100) : 0 }}%"
+              ></div>
+            </div>
+          </div>
+        @end
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <h2 class="text-sm font-semibold text-slate-900">Clientes por status</h2>
+      <div class="mt-4 space-y-3">
+        @each((label, status) in statusLabels)
+          <div class="flex items-center justify-between gap-3">
+            <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset {{ statusClasses[status] }}">
+              {{ label }}
+            </span>
+            <span class="text-sm font-semibold text-slate-900">{{ customersByStatus[status] }}</span>
+          </div>
+        @end
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 grid gap-4 lg:grid-cols-2">
+    <div class="rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div class="flex items-center justify-between gap-3 border-b border-slate-200 px-5 py-4">
+        <h2 class="text-sm font-semibold text-slate-900">Últimos clientes</h2>
+        <a
+          href="{{ route('customers.index') }}"
+          class="text-sm font-medium text-blue-600 hover:text-blue-700"
+        >Ver todos</a>
+      </div>
+
+      @if(recentCustomers.length > 0)
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <tr>
+                <th class="px-5 py-3 text-left">Cliente</th>
+                <th class="px-5 py-3 text-left">Status</th>
+                <th class="px-5 py-3 text-center">Oport.</th>
+                <th class="px-5 py-3 text-right">Cadastro</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              @each(c in recentCustomers)
+                <tr class="hover:bg-slate-50">
+                  <td class="px-5 py-3">
+                    <a
+                      href="{{ route('customers.show', { id: c.id }) }}"
+                      class="font-medium text-slate-900 hover:text-blue-700"
+                    >{{ c.name }}</a>
+                    @if(c.company)
+                      <p class="text-xs text-slate-500">{{ c.company }}</p>
+                    @end
+                  </td>
+                  <td class="px-5 py-3">
+                    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset {{ statusClasses[c.status] }}">
+                      {{ statusLabels[c.status] }}
+                    </span>
+                  </td>
+                  <td class="px-5 py-3 text-center text-slate-600">{{ Number(c.$extras.opportunities_count || 0) }}</td>
+                  <td class="px-5 py-3 text-right text-slate-500">{{ c.createdAt.setLocale('pt-BR').toFormat('dd/MM/yyyy') }}</td>
+                </tr>
+              @end
+            </tbody>
+          </table>
+        </div>
+      @else
+        <div class="px-5 py-10 text-center">
+          <p class="text-sm font-medium text-slate-900">Nenhum cliente cadastrado ainda</p>
+          <p class="mt-1 text-sm text-slate-500">Cadastre o primeiro cliente para começar a acompanhar o funil.</p>
+          <a
+            href="{{ route('customers.create') }}"
+            class="mt-4 inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+          >Novo cliente</a>
+        </div>
+      @end
+    </div>
+
+    <div class="rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div class="border-b border-slate-200 px-5 py-4">
+        <h2 class="text-sm font-semibold text-slate-900">Atividade recente</h2>
+      </div>
+
+      @if(recentInteractions.length > 0)
+        <ul class="divide-y divide-slate-100">
+          @each(interaction in recentInteractions)
+            <li class="px-5 py-4">
+              <p class="line-clamp-2 text-sm text-slate-700">{{ interaction.note }}</p>
+              <div class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-500">
+                <a
+                  href="{{ route('customers.show', { id: interaction.customerId }) }}"
+                  class="font-medium text-blue-600 hover:text-blue-700"
+                >{{ interaction.customer ? interaction.customer.name : 'Cliente removido' }}</a>
+                <span aria-hidden="true">·</span>
+                <span>{{ interaction.user ? (interaction.user.fullName || interaction.user.email) : 'Usuário removido' }}</span>
+                <span aria-hidden="true">·</span>
+                <span>{{ interaction.createdAt.setLocale('pt-BR').toFormat('dd/MM/yyyy HH:mm') }}</span>
+              </div>
+            </li>
+          @end
+        </ul>
+      @else
+        <div class="px-5 py-10 text-center">
+          <p class="text-sm font-medium text-slate-900">Nenhuma anotação registrada</p>
+          <p class="mt-1 text-sm text-slate-500">As interações lançadas na ficha dos clientes aparecem aqui.</p>
+        </div>
+      @end
+    </div>
+  </div>
+@end

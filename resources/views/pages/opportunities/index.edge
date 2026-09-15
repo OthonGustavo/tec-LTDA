@@ -1,0 +1,72 @@
+@component('components/layout', { title: 'Funil de vendas', active: 'opportunities' })
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold tracking-tight text-slate-900">Funil de vendas</h1>
+    <p class="mt-1 text-sm text-slate-500">Todas as oportunidades, organizadas por etapa.</p>
+  </div>
+
+  <div class="mb-6 grid gap-4 sm:grid-cols-3">
+    <div class="rounded-lg border border-slate-200 bg-white p-4">
+      <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Valor em negociação</p>
+      <p class="mt-1 text-2xl font-bold text-slate-900">
+        {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(pipelineValue)) }}
+      </p>
+    </div>
+    <div class="rounded-lg border border-slate-200 bg-white p-4">
+      <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Ganho</p>
+      <p class="mt-1 text-2xl font-bold text-emerald-700">
+        {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(wonValue)) }}
+      </p>
+    </div>
+    <div class="rounded-lg border border-slate-200 bg-white p-4">
+      <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Perdido</p>
+      <p class="mt-1 text-2xl font-bold text-rose-700">
+        {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(lostValue)) }}
+      </p>
+    </div>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    @each(column in columns)
+      <section class="rounded-lg border border-slate-200 bg-slate-100/70 p-3">
+        <header class="mb-3 px-1">
+          <div class="flex items-center justify-between gap-2">
+            <span
+              class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset {{ column.classes }}"
+            >{{ column.label }}</span>
+            <span class="text-xs font-medium text-slate-500">{{ column.count }}</span>
+          </div>
+          <p class="mt-2 text-sm font-semibold text-slate-700">
+            {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(column.total)) }}
+          </p>
+        </header>
+
+        @if(column.items.length)
+          <div class="space-y-2">
+            @each(o in column.items)
+              <article class="rounded-lg border border-slate-200 bg-white p-3">
+                <p class="font-medium text-slate-900">{{ o.title }}</p>
+                <a
+                  href="{{ route('customers.show', { id: o.customerId }) }}"
+                  class="mt-0.5 inline-block text-sm text-blue-700 hover:underline"
+                >{{ o.customer.name }}</a>
+                <div class="mt-2 flex items-center justify-between gap-2">
+                  <span class="text-sm font-semibold text-slate-900">
+                    {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(o.estimatedValue)) }}
+                  </span>
+                  <a
+                    href="{{ route('opportunities.edit', { id: o.id }) }}"
+                    class="text-sm font-medium text-slate-500 hover:text-slate-800 hover:underline"
+                  >Editar</a>
+                </div>
+              </article>
+            @end
+          </div>
+        @else
+          <p class="rounded-lg border border-dashed border-slate-300 px-3 py-6 text-center text-sm text-slate-500">
+            Nenhuma oportunidade
+          </p>
+        @end
+      </section>
+    @end
+  </div>
+@end

@@ -1,0 +1,99 @@
+{{--
+  Layout base do CRM.
+
+  Uso:
+    @component('components/layout', { title: 'Dashboard', active: 'dashboard' })
+      <h1>...</h1>
+    @end
+
+  Props:
+    title  - texto da aba do navegador (opcional)
+    active - 'dashboard' | 'customers' | 'opportunities' para marcar o menu (opcional)
+    bare   - true nas telas de login/registro: esconde a barra de navegação
+--}}
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title ? title + ' · CRM tec-LTDA' : 'CRM tec-LTDA' }}</title>
+    <link rel="preconnect" href="https://fonts.bunny.net" />
+    <link
+      href="https://fonts.bunny.net/css?family=inter:400,500,600,700"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } },
+      }
+    </script>
+  </head>
+  <body class="h-full bg-slate-50 font-sans text-slate-900 antialiased">
+    @if(!bare)
+      <nav class="border-b border-slate-200 bg-white">
+        <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center gap-8">
+            <a href="{{ route('dashboard') }}" class="flex items-center gap-2 text-lg font-bold tracking-tight">
+              <span class="grid h-8 w-8 place-items-center rounded-lg bg-blue-600 text-sm font-bold text-white">tL</span>
+              <span class="hidden sm:inline">CRM tec-LTDA</span>
+            </a>
+            <div class="flex items-center gap-1">
+              <a
+                href="{{ route('dashboard') }}"
+                class="rounded-md px-3 py-2 text-sm font-medium {{ active === 'dashboard' ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}"
+              >Dashboard</a>
+              <a
+                href="{{ route('customers.index') }}"
+                class="rounded-md px-3 py-2 text-sm font-medium {{ active === 'customers' ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}"
+              >Clientes</a>
+              <a
+                href="{{ route('opportunities.index') }}"
+                class="rounded-md px-3 py-2 text-sm font-medium {{ active === 'opportunities' ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}"
+              >Funil</a>
+            </div>
+          </div>
+
+          @if(auth.user)
+            <div class="flex items-center gap-3">
+              <span class="hidden text-sm text-slate-600 sm:inline">{{ auth.user.fullName || auth.user.email }}</span>
+              <form method="POST" action="{{ route('auth.logout') }}">
+                {{ csrfField() }}
+                <button
+                  type="submit"
+                  class="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                >Sair</button>
+              </form>
+            </div>
+          @end
+        </div>
+      </nav>
+    @end
+
+    <main class="{{ bare ? '' : 'mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8' }}">
+      @flashMessage('notification')
+        <div
+          class="mb-6 rounded-lg border px-4 py-3 text-sm font-medium {{ $message.type === 'error' ? 'border-rose-200 bg-rose-50 text-rose-800' : 'border-emerald-200 bg-emerald-50 text-emerald-800' }} {{ bare ? 'mx-auto mt-6 max-w-md' : '' }}"
+          role="status"
+        >
+          {{ $message.message }}
+        </div>
+      @end
+
+      {{{ await $slots.main() }}}
+    </main>
+
+    {{-- Rodapé com as páginas jurídicas: aparece em todas as telas, inclusive nas `bare`. --}}
+    <footer class="border-t border-slate-200">
+      <div
+        class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-xs text-slate-500 sm:px-6 lg:px-8 {{ bare ? 'items-center text-center' : 'sm:flex-row sm:items-center sm:justify-between' }}"
+      >
+        <p>© 2026 tec-LTDA</p>
+        <div class="flex items-center gap-4">
+          <a href="{{ route('legal.terms') }}" class="hover:text-slate-700 hover:underline">Termos de Uso</a>
+          <a href="{{ route('legal.privacy') }}" class="hover:text-slate-700 hover:underline">Política de Privacidade</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
